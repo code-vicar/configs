@@ -15,20 +15,18 @@ module.exports = function (versionNum, files) {
 }
 
 function copyOrCreate(file, version) {
-    return utils.doesFileAlreadyExist(file).then(function (exists) {
+    var prevFile = getPrevFileName(file, version)
+    var nextFile = getNewFileName(file, version)
+    return utils.doesFileAlreadyExist(prevFile).then(function (exists) {
         if (!exists) {
-            return create(file, version)
+            return writeFile(nextFile, JSON.stringify({}, null, '  '), 'utf8')
         }
-        return cp(file, version)
+        return utils.cp(prevFile, nextFile)
     })
 }
 
-function cp(file, version) {
-    return utils.cp(file, getNewFileName(file, version))
-}
-
-function create(file, version) {
-    return writeFile(getNewFileName(file, version), JSON.stringify({}), 'utf8')
+function getPrevFileName(file, version) {
+    return path.join(path.dirname(file), 'config' + (version - 1) + '.json')
 }
 
 function getNewFileName(file, version) {

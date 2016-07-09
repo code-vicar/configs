@@ -17,7 +17,7 @@ module.exports = function updateVersion(versionFile) {
 
     return doesFileAlreadyExist(versionFile).then(function(exists) {
         if (!exists) {
-            return writeFile(versionFile, '{"versions": []}', 'utf8')
+            return writeFile(versionFile, JSON.stringify({"versions": []}, null, '  '), 'utf8')
         }
     }).then(function() {
         return cp(versionFile, backup)
@@ -43,7 +43,7 @@ module.exports = function updateVersion(versionFile) {
             created_at: (new Date()).toISOString()
         })
 
-        return writeFile(backup, JSON.stringify(backupJSON, 2), 'utf8')
+        return writeFile(backup, JSON.stringify(backupJSON, null, '  '), 'utf8')
     }).then(function() {
         return cp(backup, versionFile)
     }).then(function() {

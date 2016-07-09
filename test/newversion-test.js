@@ -77,19 +77,37 @@ describe('newversion', function () {
         })
     })
 
-    describe('config files', function() {
-        describe('no pre-existing versions', function() {
+    describe('config files', function () {
+        describe('no pre-existing versions', function () {
             willCreateNewConfigFiles(1)
         })
 
-        describe('pre-existing versions', function() {
-            beforeEach(function(done) {
-                return mkdirp(configsFolderPath).then(function () {
-                    return cp(path.resolve(__dirname, 'fixtures', 'versions.json'), path.resolve(configsFolderPath, 'versions.json'))
-                }).then(done).catch(done)
+        describe('pre-existing versions', function () {
+            beforeEach(function (done) {
+                return mkdirp(path.join(configsFolderPath, 'DEV')).then(function () {
+                    return Promise.all([
+                        cp(path.resolve(__dirname, 'fixtures', 'versions.json'), path.resolve(configsFolderPath, 'versions.json')),
+                        cp(path.resolve(__dirname, 'fixtures', 'DEV', 'config1.json'), path.join(configsFolderPath, 'DEV', 'config1.json'))
+                    ])
+                }).then(function() {
+                    done()
+                }).catch(done)
             })
 
             willCreateNewConfigFiles(2)
+
+            it('should preserve contents of previous config file', function (done) {
+                var configFile = path.resolve(configsFolderPath, 'DEV', 'config1.json')
+                var newConfigFile = path.resolve(configsFolderPath, 'DEV', 'config2.json')
+                return newversion({ cwd: __dirname }).then(function () {
+                    return Promise.all([
+                        readFile(configFile, 'utf8'),
+                        readFile(newConfigFile, 'utf8')
+                    ])
+                }).spread(function (configFileContents, newConfigFileContents) {
+                    expect(configFileContents).to.be.equal(newConfigFileContents)
+                }).then(done).catch(done)
+            })
         })
     })
 })
@@ -133,10 +151,10 @@ function willCreatesFolders() {
 
 function willCreateNewConfigFiles(versionNum) {
     var files = [
-        'configs/DEV/config'+versionNum+'.json',
-        'configs/QA/config'+versionNum+'.json',
-        'configs/STAGING/config'+versionNum+'.json',
-        'configs/LIVE/config'+versionNum+'.json'
+        'configs/DEV/config' + versionNum + '.json',
+        'configs/QA/config' + versionNum + '.json',
+        'configs/STAGING/config' + versionNum + '.json',
+        'configs/LIVE/config' + versionNum + '.json'
     ]
 
     _.forEach(files, function (file) {
