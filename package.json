@@ -1,0 +1,22 @@
+{
+  "name": "aernow-api-configs",
+  "version": "1.0.0",
+  "description": "Versioned configuration files for Aernow RTV API",
+  "scripts": {
+    "deploy": "",
+    "test": "BLUEBIRD_W_FORGOTTEN_RETURN=0 mocha test --recursive"
+  },
+  "private": true,
+  "author": "Scott Vickers",
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "commander": "^2.9.0",
+    "lodash": "^4.13.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "del": "^2.2.1",
+    "mkdirp": "^0.5.1",
+    "mocha": "^2.5.3"
+  }
+}
