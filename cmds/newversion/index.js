@@ -5,6 +5,8 @@ var Promise = require('bluebird')
 var _ = require('lodash')
 var fp = require('lodash/fp')
 
+var validateDirectory = require('../../utils').validateDirectory
+
 var createDirs = require('./createDirs')
 var updateVersion = require('./updateVersion')
 var createConfigs = require('./createConfigs')
@@ -49,17 +51,4 @@ module.exports = function (options) {
             return versionNum
         })
     })
-}
-
-function validateDirectory(cwd) {
-    if (!_.isNil(cwd)) {
-        return stat(cwd).then(function (cwdStats) {
-            if (!cwdStats.isDirectory()) {
-                throw new Error('Invalid cwd option')
-            }
-            return cwd
-        })
-    } else {
-        return Promise.resolve(__dirname)
-    }
 }

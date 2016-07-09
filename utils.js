@@ -24,6 +24,18 @@ var utils = {
                 resolve()
             })
         })
+    },
+    validateDirectory: function validateDirectory(cwd) {
+        if (!_.isNil(cwd)) {
+            return stat(cwd).then(function (cwdStats) {
+                if (!cwdStats.isDirectory()) {
+                    throw new Error('Invalid cwd option')
+                }
+                return cwd
+            })
+        } else {
+            return Promise.resolve(__dirname)
+        }
     }
 }
 
