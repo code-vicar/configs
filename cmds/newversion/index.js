@@ -38,11 +38,15 @@ module.exports = function (options) {
         var fullFolderPaths = mapFullPath(folders)
         var fullFilePaths = mapFullPath(files)
         var fullVersionFilePath = path.resolve(cwd, versionsFile)
+        var versionNum
 
         return createDirs(fullFolderPaths).then(function () {
             return updateVersion(fullVersionFilePath)
-        }).then(function (versionNum) {
-            return createConfigs(versionNum, fullFilePaths)
+        }).then(function (_versionNum) {
+            versionNum = _versionNum
+            return createConfigs(_versionNum, fullFilePaths)
+        }).then(function() {
+            return versionNum
         })
     })
 }

@@ -9,6 +9,7 @@ var doesFileAlreadyExist = utils.doesFileAlreadyExist
 
 var readFile = Promise.promisify(fs.readFile)
 var writeFile = Promise.promisify(fs.writeFile)
+var unlink = Promise.promisify(fs.unlink)
 
 module.exports = function updateVersion(versionFile) {
     var backup = path.join(path.dirname(versionFile), '.' + path.basename(versionFile))
@@ -45,6 +46,8 @@ module.exports = function updateVersion(versionFile) {
         return writeFile(backup, JSON.stringify(backupJSON, 2), 'utf8')
     }).then(function() {
         return cp(backup, versionFile)
+    }).then(function() {
+        return unlink(backup)
     }).then(function() {
         return nextVersion
     })
