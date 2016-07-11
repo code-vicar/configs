@@ -7,13 +7,14 @@
   },
   "author": "Scott Vickers",
   "bin": {
-      "configs": "./cli.js"
+    "configs": "./cli.js"
   },
   "main": "",
   "dependencies": {
     "aws-sdk": "^2.4.6",
     "bluebird": "^3.4.1",
     "commander": "^2.9.0",
+    "glob": "^7.0.5",
     "lodash": "^4.13.1"
   },
   "devDependencies": {
