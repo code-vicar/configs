@@ -26,7 +26,28 @@ program
     .action(function(bucket, options) {
         var cwd = getCwd()
         return cmds.deploy({cwd: cwd, bucket: bucket, prefix: options.prefix}).then(function(results) {
-            console.log('deployed files\nlocal -> remove\n' + JSON.stringify(results.files, null, '  ') + '\nto bucket ' + results.bucket)
+            if (results.files.length === 0) {
+                console.log('no files deployed')
+            } else {
+                console.log('deployed files\n** local -> remote **\n' + JSON.stringify(results.files, null, '  ') + '\nto bucket ' + results.bucket)
+            }
+        })
+    })
+
+program
+    .command('fetch')
+    .arguments('<bucket> <version>')
+    .option('-p, --prefix <prefix>', 'prefix to add to fetch file path')
+    .option('-e, --env <env>', 'environment for which to fetch the config file (defaults to DEV)')
+    .description('fetch a config file')
+    .action(function(bucket, version, options) {
+        var cwd = getCwd()
+        return cmds.fetch({cwd: cwd, bucket: bucket, version: version, prefix: options.prefix, env: options.env}).then(function(results) {
+            if (results.files.length === 0) {
+                console.log('no files fetched')
+            } else {
+                console.log('fetched file\n** local -> remote **\n' + JSON.stringify(results.files, null, '  ') + '\nfrom bucket ' + results.bucket)
+            }
         })
     })
 

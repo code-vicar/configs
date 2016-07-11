@@ -46,6 +46,7 @@ describe('deploy', function () {
             done(new Error('Should not succeed'))
         }).catch(function (err) {
             expect(err).to.exist
+            expect(err.message).to.not.equal('Should not succeed')
             done()
         })
     })

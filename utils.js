@@ -34,7 +34,7 @@ var utils = {
                 return cwd
             })
         } else {
-            return Promise.resolve(__dirname)
+            return Promise.resolve(process.cwd())
         }
     }
 }

@@ -7,7 +7,7 @@ var glob = Promise.promisify(require('glob'))
 
 var AWS = require('aws-sdk')
 AWS.config.region = 'us-west-2'
-AWS.config.logger = process.stdout
+// AWS.config.logger = process.stdout
 
 var validateDirectory = require('../../utils').validateDirectory
 var s3 = Promise.promisifyAll(new AWS.S3())
