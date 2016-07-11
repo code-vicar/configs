@@ -31,10 +31,10 @@ program
     })
 
 function getCwd() {
-    var cwd = __dirname
+    var cwd = process.cwd()
 
     if (program.dir) {
-        cwd = path.resolve(__dirname, program.dir)
+        cwd = path.resolve(cwd, program.dir)
     }
 
     return cwd
