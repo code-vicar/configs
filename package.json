@@ -1,13 +1,15 @@
 {
-  "name": "aernow-api-configs",
+  "name": "@code-vicar/configs",
   "version": "1.0.0",
-  "description": "Versioned configuration files for Aernow RTV API",
+  "description": "Versioned configuration file tool",
   "scripts": {
-    "deploy": "",
     "test": "BLUEBIRD_W_FORGOTTEN_RETURN=0 mocha test --recursive"
   },
-  "private": true,
   "author": "Scott Vickers",
+  "bin": {
+      "configs": "./cli.js"
+  },
+  "main": "",
   "dependencies": {
     "aws-sdk": "^2.4.6",
     "bluebird": "^3.4.1",
