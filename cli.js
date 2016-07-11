@@ -5,7 +5,7 @@ var program = require('commander')
 
 var cmds = require('./index.js')
 
-program.version('1.0.0')
+program.version('1.0.1')
     .option('-d, --dir <dir>', 'set the cwd')
 
 program
